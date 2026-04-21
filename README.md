@@ -1,4 +1,3 @@
-````markdown
 # Campus Mart
 
 A secure peer-to-peer campus marketplace built for students to buy, sell, and exchange products within their college community.
