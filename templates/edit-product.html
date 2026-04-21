@@ -1,0 +1,159 @@
+<!-- edit-product.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Product - CampusMart</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Navbar */
+nav{
+    background:#1e3c72;
+    color:white;
+    padding:18px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:18px;
+}
+
+/* Container */
+.container{
+    max-width:700px;
+    margin:40px auto;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.container h2{
+    color:#1e3c72;
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.input-box{
+    margin-bottom:18px;
+}
+
+.input-box label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#333;
+}
+
+.input-box input,
+.input-box textarea,
+.input-box select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+.input-box textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+.input-box input:focus,
+.input-box textarea:focus,
+.input-box select:focus{
+    border-color:#1e3c72;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    background:#1e3c72;
+    color:white;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#2a5298;
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <h1>CampusMart</h1>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Edit Product</h2>
+
+    <form action="/edit-product/{{ product.id }}" method="POST" enctype="multipart/form-data">
+
+        <div class="input-box">
+            <label>Product Name</label>
+            <input type="text" name="name" value="{{ product.name }}" placeholder="Enter product name" required>
+        </div>
+
+        <div class="input-box">
+            <label>Category</label>
+            <select name="category" required>
+                <option value="{{ product.category }}" selected>{{ product.category }}</option>
+                <option>Books</option>
+                <option>Electronics</option>
+                <option>Notes</option>
+                <option>Bicycle</option>
+                <option>Furniture</option>
+                <option>Others</option>
+            </select>
+        </div>
+
+        <div class="input-box">
+            <label>Price (₹)</label>
+            <input type="number" step="0.01" name="price" value="{{ product.price }}" placeholder="Enter price" required>
+        </div>
+
+        <div class="input-box">
+            <label>Description</label>
+            <textarea name="description" placeholder="Enter product details">{{ product.description }}</textarea>
+        </div>
+
+        <div class="input-box">
+            <label>Upload Image</label>
+            <input type="file" name="image">
+        </div>
+
+        <button type="submit" class="btn">Update Product</button>
+
+    </form>
+</div>
+
+</body>
+</html>

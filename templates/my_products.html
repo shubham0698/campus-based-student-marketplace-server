@@ -1,0 +1,390 @@
+<!-- my_products.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Products - CampusMart</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+    min-height:100vh;
+}
+
+/* Navbar */
+nav{
+    background:white;
+    color:#2d3748;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:0 0 15px 15px;
+    margin-bottom:30px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+nav .logo{
+    font-size:24px;
+    font-weight:700;
+    color:#667eea;
+}
+
+nav .logo i{
+    margin-right:8px;
+}
+
+nav a{
+    color:#4a5568;
+    text-decoration:none;
+    margin-left:20px;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#667eea;
+}
+
+/* Header */
+.header{
+    padding:40px 30px 20px;
+    text-align:center;
+}
+
+.header h2{
+    color:#2d3748;
+    font-size:32px;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.header p{
+    color:#718096;
+    font-size:16px;
+    max-width:600px;
+    margin:0 auto;
+}
+
+/* Stats */
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    max-width:1000px;
+    margin:0 auto 40px;
+    padding:0 30px;
+}
+
+.stat-card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.stat-card .icon{
+    font-size:36px;
+    color:#667eea;
+    margin-bottom:15px;
+}
+
+.stat-card .number{
+    font-size:28px;
+    font-weight:700;
+    color:#2d3748;
+    margin-bottom:5px;
+}
+
+.stat-card .label{
+    color:#718096;
+    font-size:14px;
+    font-weight:500;
+}
+
+/* Products Grid */
+.container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 30px 40px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+    transition:0.3s;
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.content{
+    padding:20px;
+}
+
+.content h3{
+    margin-bottom:12px;
+    color:#2d3748;
+    font-size:18px;
+    font-weight:600;
+    line-height:1.3;
+}
+
+.price{
+    color:#38a169;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+}
+
+.price i{
+    margin-right:5px;
+}
+
+.content p{
+    color:#718096;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+.status{
+    display:inline-block;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.status.active{
+    background:#c6f6d5;
+    color:#22543d;
+}
+
+.status.sold{
+    background:#fed7d7;
+    color:#742a2a;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    flex:1;
+    text-align:center;
+    padding:12px 16px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+    font-size:14px;
+    transition:0.3s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+}
+
+.edit{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.delete{
+    background:linear-gradient(135deg,#e53e3e,#c53030);
+}
+
+.edit:hover{
+    background:linear-gradient(135deg,#5a67d8,#6b46c1);
+    transform:translateY(-2px);
+}
+
+.delete:hover{
+    background:linear-gradient(135deg,#d53f3f,#b91c1c);
+    transform:translateY(-2px);
+}
+
+/* Empty state */
+.empty-state{
+    text-align:center;
+    padding:80px 20px;
+    color:#718096;
+}
+
+.empty-state i{
+    font-size:64px;
+    color:#cbd5e0;
+    margin-bottom:20px;
+}
+
+.empty-state h3{
+    font-size:24px;
+    margin-bottom:10px;
+    color:#4a5568;
+}
+
+.empty-state p{
+    font-size:16px;
+    margin-bottom:30px;
+}
+
+.empty-state .btn{
+    display:inline-flex;
+    padding:15px 30px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-decoration:none;
+    border-radius:12px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.empty-state .btn:hover{
+    background:linear-gradient(135deg,#5a67d8,#6b46c1);
+    transform:translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width:768px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:0 20px 40px;
+    }
+
+    nav{
+        padding:12px 20px;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav .nav-links{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:15px;
+    }
+
+    nav a{
+        margin:0;
+    }
+
+    .stats{
+        grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+        padding:0 20px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <div class="logo"><i class="fas fa-university"></i> CampusMart</div>
+    <div class="nav-links">
+        <a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="/add-product"><i class="fas fa-plus-circle"></i> Add Product</a>
+        <a href="/products"><i class="fas fa-shopping-bag"></i> Browse</a>
+        <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+</nav>
+
+<section class="header">
+    <h2><i class="fas fa-box"></i> My Products</h2>
+    <p>Manage all products you have listed for sale in the campus marketplace</p>
+</section>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="icon"><i class="fas fa-box-open"></i></div>
+        <div class="number">12</div>
+        <div class="label">Active Listings</div>
+    </div>
+    <div class="stat-card">
+        <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+        <div class="number">8</div>
+        <div class="label">Items Sold</div>
+    </div>
+    <div class="stat-card">
+        <div class="icon"><i class="fas fa-eye"></i></div>
+        <div class="number">156</div>
+        <div class="label">Total Views</div>
+    </div>
+    <div class="stat-card">
+        <div class="icon"><i class="fas fa-rupee-sign"></i></div>
+        <div class="number">₹4,250</div>
+        <div class="label">Earnings</div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="grid">
+        {% for product in products %}
+        <div class="card">
+            <img src="{{ product.image or 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="{{ product.name }}">
+            <div class="content">
+                <h3>{{ product.name }}</h3>
+                <div class="price"><i class="fas fa-rupee-sign"></i>{{ "%.2f"|format(product.price) }}</div>
+                <span class="status active">Active</span>
+                <p>{{ product.description[:100] }}...</p>
+                <div class="actions">
+                    <a href="/edit-product/{{ product.id }}" class="btn edit">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="/delete-product/{{ product.id }}" class="btn delete" onclick="return confirm('Are you sure you want to delete this product?')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not products %}
+    <div class="empty-state">
+        <i class="fas fa-box-open"></i>
+        <h3>No products listed yet</h3>
+        <p>Start selling by adding your first product to the marketplace</p>
+        <a href="/add-product" class="btn">
+            <i class="fas fa-plus-circle"></i> Add Your First Product
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

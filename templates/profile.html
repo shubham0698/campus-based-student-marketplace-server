@@ -1,0 +1,112 @@
+<!-- profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - CampusMart</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+/* Navbar */
+nav{
+    background:#1e3c72;
+    color:white;
+    padding:18px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:18px;
+}
+
+/* Container */
+.container{
+    max-width:600px;
+    margin:40px auto;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+}
+
+.container h2{
+    color:#1e3c72;
+    margin-bottom:25px;
+    text-align:center;
+}
+
+.profile-info{
+    margin-bottom:20px;
+}
+
+.profile-info p{
+    margin-bottom:10px;
+    padding:10px;
+    background:#f8f9fa;
+    border-radius:8px;
+}
+
+.profile-info strong{
+    color:#1e3c72;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 25px;
+    background:#1e3c72;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+.btn:hover{
+    background:#2a5298;
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <h1>CampusMart</h1>
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>My Profile</h2>
+
+    <div class="profile-info">
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone or "Not provided" }}</p>
+        <p><strong>College:</strong> {{ user.college or "Not provided" }}</p>
+        <p><strong>Department:</strong> {{ user.department or "Not provided" }}</p>
+        <p><strong>Member since:</strong> {{ user.created_at.strftime('%B %Y') }}</p>
+    </div>
+
+    <a href="/dashboard" class="btn">Back to Dashboard</a>
+</div>
+
+</body>
+</html>

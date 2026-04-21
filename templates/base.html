@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CampusMart{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="{{ url_for('home') }}">
+                    <i class="fas fa-store"></i>
+                    <span>CampusMart</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="{{ url_for('home') }}" class="nav-link">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="{{ url_for('product.products') }}" class="nav-link">
+                    <i class="fas fa-cube"></i> Products
+                </a>
+                
+                {% if session.get('user_id') %}
+                    <div class="nav-dropdown">
+                        <button class="nav-link dropdown-btn">
+                            <i class="fas fa-user"></i> Menu <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="{{ url_for('dashboard.dashboard_home') }}" class="dropdown-item">
+                                <i class="fas fa-chart-line"></i> Dashboard
+                            </a>
+                            <a href="{{ url_for('product.my_products') }}" class="dropdown-item">
+                                <i class="fas fa-box"></i> My Products
+                            </a>
+                            <a href="{{ url_for('product.add_product') }}" class="dropdown-item">
+                                <i class="fas fa-plus"></i> Add Product
+                            </a>
+                            <a href="{{ url_for('dashboard.orders') }}" class="dropdown-item">
+                                <i class="fas fa-shopping-bag"></i> Orders
+                            </a>
+                            <a href="{{ url_for('dashboard.wishlist') }}" class="dropdown-item">
+                                <i class="fas fa-heart"></i> Wishlist
+                            </a>
+                            <a href="{{ url_for('dashboard.messages') }}" class="dropdown-item">
+                                <i class="fas fa-envelope"></i> Messages
+                            </a>
+                            <a href="{{ url_for('dashboard.profile') }}" class="dropdown-item">
+                                <i class="fas fa-user-circle"></i> Profile
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="{{ url_for('auth.logout') }}" class="dropdown-item logout-item">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="nav-link btn-login">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    <a href="{{ url_for('auth.register') }}" class="nav-link btn-register">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
+                {% endif %}
+            </div>
+            
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alerts-container">
+                {% for message in messages %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        {{ message }}
+                        <button class="alert-close">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-store"></i>
+                    <h3>CampusMart</h3>
+                </div>
+                <p>Your ultimate student marketplace. Buy, sell, and trade with fellow students.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('product.products') }}">Products</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Get In Touch</h4>
+                <ul class="footer-contact">
+                    <li><i class="fas fa-envelope"></i> info@campusmart.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> College Campus</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 CampusMart. All rights reserved. | Designed for Students, by Students</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Dropdown Menu
+        const dropdownBtn = document.querySelector('.dropdown-btn');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+        
+        if (dropdownBtn) {
+            dropdownBtn.addEventListener('click', () => {
+                dropdownMenu.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-dropdown')) {
+                    dropdownMenu.classList.remove('active');
+                }
+            });
+        }
+
+        // Close Alert
+        document.querySelectorAll('.alert-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.remove();
+            });
+        });
+
+        // Auto-close alerts after 5 seconds
+        setTimeout(() => {
+            document.querySelectorAll('.alerts-container .alert').forEach(alert => {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
