@@ -1,4 +1,4 @@
-<!-- login.html -->
+<!-- templates/login.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - CampusMart</title>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 <style>
@@ -17,11 +18,12 @@
 }
 
 body{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    padding:20px;
     position:relative;
     overflow:hidden;
 }
@@ -29,102 +31,96 @@ body{
 body::before{
     content:'';
     position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="2" fill="white" opacity="0.05"/><circle cx="75" cy="75" r="2" fill="white" opacity="0.05"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+    inset:0;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000'%3E%3Cdefs%3E%3Cpattern id='grain' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='25' cy='25' r='2' fill='white' opacity='0.05'/%3E%3Ccircle cx='75' cy='75' r='2' fill='white' opacity='0.05'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grain)'/%3E%3C/svg%3E");
 }
 
 .login-box{
-    width:420px;
-    background:white;
-    padding:50px 40px;
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    padding:45px 35px;
     border-radius:20px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.2);
+    box-shadow:0 20px 60px rgba(0,0,0,0.18);
     position:relative;
     z-index:1;
+}
+
+.logo{
     text-align:center;
-}
-
-.login-box .logo{
-    font-size:32px;
-    color:#667eea;
-    margin-bottom:10px;
+    font-size:30px;
     font-weight:700;
+    color:#667eea;
+    margin-bottom:8px;
 }
 
-.login-box .subtitle{
+.subtitle{
+    text-align:center;
     color:#718096;
     margin-bottom:30px;
-    font-size:16px;
+    font-size:15px;
 }
 
 .input-group{
-    margin-bottom:25px;
-    text-align:left;
+    margin-bottom:20px;
 }
 
 .input-group label{
     display:block;
     margin-bottom:8px;
+    font-size:14px;
     font-weight:600;
     color:#2d3748;
-    font-size:14px;
 }
 
 .input-group input{
     width:100%;
-    padding:15px 20px;
+    padding:14px 16px;
     border:2px solid #e2e8f0;
     border-radius:12px;
-    font-size:16px;
+    font-size:15px;
     outline:none;
     transition:0.3s;
-    background:#f8f9fa;
+    background:#f8fafc;
 }
 
 .input-group input:focus{
     border-color:#667eea;
-    background:white;
-    box-shadow:0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.input-group input::placeholder{
-    color:#a0aec0;
+    background:#fff;
+    box-shadow:0 0 0 3px rgba(102,126,234,0.12);
 }
 
 .btn{
     width:100%;
-    padding:16px;
     border:none;
+    padding:15px;
+    border-radius:12px;
     background:linear-gradient(135deg,#667eea,#764ba2);
-    color:white;
+    color:#fff;
     font-size:16px;
     font-weight:600;
-    border-radius:12px;
     cursor:pointer;
     transition:0.3s;
-    margin-bottom:25px;
+    margin-top:8px;
 }
 
 .btn:hover{
-    background:linear-gradient(135deg,#5a67d8,#6b46c1);
     transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(102, 126, 234, 0.3);
+    box-shadow:0 12px 24px rgba(102,126,234,0.28);
 }
 
 .links{
+    margin-top:20px;
     text-align:center;
-    margin-bottom:20px;
 }
 
 .links a{
+    display:block;
+    margin:8px 0;
     text-decoration:none;
     color:#667eea;
     font-size:14px;
     font-weight:500;
-    transition:0.3s;
 }
 
 .links a:hover{
@@ -132,10 +128,11 @@ body::before{
 }
 
 .divider{
-    margin:25px 0;
-    position:relative;
+    text-align:center;
+    margin:25px 0 15px;
     color:#718096;
     font-size:14px;
+    position:relative;
 }
 
 .divider::before{
@@ -143,91 +140,98 @@ body::before{
     position:absolute;
     top:50%;
     left:0;
-    right:0;
+    width:100%;
     height:1px;
     background:#e2e8f0;
 }
 
 .divider span{
-    background:white;
-    padding:0 15px;
     position:relative;
-    z-index:1;
+    background:#fff;
+    padding:0 12px;
 }
 
 .social-btn{
     width:100%;
     padding:12px;
     border:2px solid #e2e8f0;
-    background:white;
     border-radius:12px;
-    cursor:pointer;
-    transition:0.3s;
+    background:#fff;
     margin-bottom:10px;
+    cursor:pointer;
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
     font-size:14px;
-    font-weight:500;
+    font-weight:600;
     color:#4a5568;
+    transition:0.3s;
 }
 
 .social-btn:hover{
+    background:#f8fafc;
     border-color:#cbd5e0;
-    background:#f8f9fa;
 }
 
 .back-home{
     display:block;
     text-align:center;
     margin-top:20px;
-    color:#a0aec0;
     text-decoration:none;
+    color:#94a3b8;
     font-size:14px;
-    transition:0.3s;
 }
 
 .back-home:hover{
     color:#667eea;
 }
 
-/* Responsive */
-@media (max-width:480px){
+@media(max-width:480px){
     .login-box{
-        width:90%;
-        padding:30px 25px;
+        padding:35px 22px;
     }
 
-    .login-box .logo{
-        font-size:28px;
+    .logo{
+        font-size:26px;
     }
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="login-box">
-    <div class="logo"><i class="fas fa-university"></i> CampusMart</div>
-    <div class="subtitle">Welcome back! Please sign in to your account</div>
+
+    <div class="logo">
+        <i class="fas fa-university"></i> CampusMart
+    </div>
+
+    <div class="subtitle">
+        Welcome back! Sign in to continue
+    </div>
 
     <form action="/login" method="POST">
+
         <div class="input-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
         </div>
 
         <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
         </div>
 
-        <button type="submit" class="btn">Sign In</button>
+        <button type="submit" class="btn">
+            Sign In
+        </button>
+
     </form>
 
     <div class="links">
-        <a href="/register">Don't have an account? Sign up</a>
+        <a href="/register">Create New Account</a>
+        <a href="#">Forgot Password?</a>
     </div>
 
     <div class="divider">
@@ -235,51 +239,17 @@ body::before{
     </div>
 
     <button class="social-btn">
-        <i class="fab fa-google"></i>
-        Continue with Google
+        <i class="fab fa-google"></i> Continue with Google
     </button>
 
     <button class="social-btn">
-        <i class="fab fa-facebook"></i>
-        Continue with Facebook
+        <i class="fab fa-facebook"></i> Continue with Facebook
     </button>
 
     <a href="/" class="back-home">
         <i class="fas fa-arrow-left"></i> Back to Home
     </a>
-</div>
 
-</body>
-</html>
-
-</head>
-<body>
-
-<div class="login-box">
-    <h2>CampusMart Login</h2>
-
-    <form action="/login" method="POST">
-
-        <div class="input-box">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Enter your email" required>
-        </div>
-
-        <div class="input-box">
-            <label>Password</label>
-            <input type="password" name="password" placeholder="Enter password" required>
-        </div>
-
-        <button type="submit" class="btn">Login</button>
-
-    </form>
-
-    <div class="links">
-        <p><a href="/register">Create New Account</a></p>
-        <p><a href="#">Forgot Password?</a></p>
-    </div>
-
-    <a href="/" class="back-home">← Back to Home</a>
 </div>
 
 </body>

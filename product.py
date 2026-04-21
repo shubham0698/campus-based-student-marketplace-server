@@ -62,7 +62,7 @@ def add_product():
         flash("Product added successfully.")
         return redirect(url_for("product.my_products"))
 
-    return render_template("add-product.html")
+    return render_template("add_product.html")
 
 
 # ==================================================
@@ -80,7 +80,7 @@ def my_products():
     ).order_by(Product.id.desc()).all()
 
     return render_template(
-        "my-products.html",
+        "my_products.html",
         products=user_products
     )
 
