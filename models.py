@@ -17,6 +17,12 @@ class User(db.Model):
     college = db.Column(db.String(150))
     department = db.Column(db.String(100))
     password = db.Column(db.String(255), nullable=False)
+    
+    # Location fields for location-based search
+    location_name = db.Column(db.String(200), default="Campus")
+    latitude = db.Column(db.Float, default=0.0)
+    longitude = db.Column(db.Float, default=0.0)
+    
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     products = db.relationship("Product", backref="owner", lazy=True)
@@ -41,6 +47,9 @@ class Product(db.Model):
     description = db.Column(db.Text)
     image = db.Column(db.String(255))
     status = db.Column(db.String(50), default="available")
+    
+    # For recommendation system
+    view_count = db.Column(db.Integer, default=0)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 

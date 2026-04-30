@@ -651,6 +651,7 @@ textarea {
         padding: 15px 20px;
         border-radius: 0;
         width: 100%;
+        font-size: 14px;
     }
 
     .nav-dropdown {
@@ -687,15 +688,212 @@ textarea {
         width: 100%;
         text-align: center;
         margin-top: 10px;
+        font-size: 14px;
+        padding: 10px 15px;
     }
 
     .footer-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 30px;
     }
 
     .main-content {
         min-height: calc(100vh - 60px - 300px);
+        padding: 0 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .col-md-2 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+
+    .col-md-3 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+
+    .col-md-4 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    .col-md-6 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    .row {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+    .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    h3 {
+        font-size: 19px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 0 !important;
+    }
+
+    .search-input-group {
+        max-width: 100%;
+        padding: 10px 15px;
+    }
+
+    .search-links {
+        gap: 10px;
+    }
+
+    .search-links a {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .py-20 {
+        padding: 20px 0 !important;
+    }
+
+    .py-40 {
+        padding: 30px 0 !important;
+    }
+
+    .py-60 {
+        padding: 40px 0 !important;
+    }
+}
+
+/* ============================================
+   SEARCH BAR SECTION
+   ============================================ */
+
+.search-bar-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 20px 0;
+    box-shadow: var(--card-shadow);
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-input-group i {
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+.search-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-links a {
+    color: white;
+    font-size: 14px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .search-input-group {
+        max-width: 100%;
+    }
+
+    .search-links {
+        gap: 10px;
+    }
+
+    .search-links a {
+        font-size: 12px;
+        padding: 6px 12px;
     }
 }
 
@@ -730,5 +928,144 @@ textarea {
     .btn {
         padding: 10px 20px;
         font-size: 14px;
+        width: 100%;
+    }
+
+    .main-content {
+        padding: 0 15px;
+    }
+
+    .search-bar-section {
+        padding: 15px 0;
+    }
+
+    .search-form {
+        gap: 12px;
+        padding: 0 15px;
+    }
+
+    .search-input-group {
+        max-width: 100%;
+        padding: 8px 12px;
+    }
+
+    .search-input {
+        font-size: 14px;
+    }
+
+    .search-btn {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .search-links {
+        gap: 5px;
+    }
+
+    .search-links a {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+
+    .container {
+        padding: 0 15px !important;
+    }
+
+    .row {
+        margin: -10px !important;
+    }
+
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-6, .col-md-12 {
+        padding: 10px !important;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card-header {
+        font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+
+    .form-row {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .input-group {
+        margin-bottom: 15px !important;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    h4 {
+        font-size: 16px;
+    }
+
+    h5 {
+        font-size: 15px;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        left: -150px;
+        right: auto;
+    }
+
+    .nav-menu.active {
+        max-height: 600px;
+    }
+
+    .footer-container {
+        gap: 20px;
+    }
+
+    .py-20 {
+        padding: 15px 0 !important;
+    }
+
+    .py-40 {
+        padding: 25px 0 !important;
+    }
+
+    .py-60 {
+        padding: 35px 0 !important;
+    }
+
+    .mt-5 {
+        margin-top: 20px !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 15px !important;
+    }
+
+    .text-muted {
+        font-size: 12px;
+    }
+
+    .badge {
+        font-size: 11px;
+        padding: 3px 8px !important;
     }
 }

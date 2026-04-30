@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2>🔥 Trending Products</h2>
+            <p class="text-muted">
+                Most popular and viewed products on Campus Mart
+            </p>
+            <p class="text-danger">Found {{ result_count }} trending product(s)</p>
+        </div>
+    </div>
+
+    {% if products %}
+        <div class="row">
+            {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-danger">
+                        <small class="text-white">🔥 Trending</small>
+                    </div>
+                    {% if product.image %}
+                    <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-muted">No Image</span>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-truncate">{{ product.description }}</p>
+                        <p class="card-text">
+                            <strong>₹{{ "%.2f"|format(product.price) }}</strong>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                📊 Views: <span class="badge badge-warning">{{ product.view_count }}</span>
+                            </small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Category: <span class="badge badge-info">{{ product.category or 'General' }}</span>
+                            </small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                👤 Seller: <span class="badge badge-secondary">{{ product.owner.name }}</span>
+                            </small>
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn btn-primary btn-sm w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            <h4 class="alert-heading">No trending products yet!</h4>
+            <p>Be the first to start exploring! <a href="{{ url_for('product.products') }}">Browse all products</a>.</p>
+        </div>
+    {% endif %}
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="{{ url_for('product.products') }}" class="btn btn-secondary">All Products</a>
+            <a href="{{ url_for('product.categories') }}" class="btn btn-info">Browse by Category</a>
+            {% if "user_id" in session %}
+            <a href="{{ url_for('product.nearest_products') }}" class="btn btn-success">Nearest Products</a>
+            <a href="{{ url_for('product.recommendations') }}" class="btn btn-primary">Recommended For You</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

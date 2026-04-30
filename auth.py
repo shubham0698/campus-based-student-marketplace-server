@@ -23,6 +23,11 @@ def register():
         college = request.form.get("college")
         department = request.form.get("department")
         password = request.form.get("password")
+        
+        # Location fields
+        location_name = request.form.get("location_name", "Campus")
+        latitude = request.form.get("latitude", 0.0)
+        longitude = request.form.get("longitude", 0.0)
 
         # Check if user already exists
         existing_user = User.query.filter_by(email=email).first()
@@ -41,7 +46,10 @@ def register():
             phone=phone,
             college=college,
             department=department,
-            password=hashed_password
+            password=hashed_password,
+            location_name=location_name,
+            latitude=float(latitude) if latitude else 0.0,
+            longitude=float(longitude) if longitude else 0.0
         )
 
         db.session.add(new_user)

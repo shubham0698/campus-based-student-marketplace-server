@@ -26,8 +26,21 @@
                 <a href="{{ url_for('product.products') }}" class="nav-link">
                     <i class="fas fa-cube"></i> Products
                 </a>
+                <a href="{{ url_for('product.categories') }}" class="nav-link">
+                    <i class="fas fa-list"></i> Categories
+                </a>
+                <a href="{{ url_for('product.trending') }}" class="nav-link">
+                    <i class="fas fa-fire"></i> Trending
+                </a>
                 
                 {% if session.get('user_id') %}
+                    <a href="{{ url_for('product.nearest_products') }}" class="nav-link">
+                        <i class="fas fa-location-dot"></i> Nearby
+                    </a>
+                    <a href="{{ url_for('product.recommendations') }}" class="nav-link">
+                        <i class="fas fa-star"></i> For You
+                    </a>
+                    
                     <div class="nav-dropdown">
                         <button class="nav-link dropdown-btn">
                             <i class="fas fa-user"></i> Menu <i class="fas fa-chevron-down"></i>
@@ -75,6 +88,33 @@
             </div>
         </div>
     </nav>
+
+    <!-- Search Bar -->
+    <div class="search-bar-section">
+        <div class="container">
+            <form action="{{ url_for('product.search') }}" method="get" class="search-form">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input 
+                        type="text" 
+                        name="q" 
+                        class="search-input" 
+                        placeholder="Search products, books, electronics..." 
+                        required
+                    >
+                    <button type="submit" class="search-btn">Search</button>
+                </div>
+                <div class="search-links">
+                    <a href="{{ url_for('product.categories') }}"><i class="fas fa-list"></i> Categories</a>
+                    <a href="{{ url_for('product.trending') }}"><i class="fas fa-fire"></i> Trending</a>
+                    {% if session.get('user_id') %}
+                    <a href="{{ url_for('product.recommendations') }}"><i class="fas fa-star"></i> For You</a>
+                    <a href="{{ url_for('product.nearest_products') }}"><i class="fas fa-location-dot"></i> Nearby</a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
