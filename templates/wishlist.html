@@ -1,164 +1,52 @@
-<!-- wishlist.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wishlist - CampusMart</title>
+{% block title %}Wishlist - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+{% block search_bar %}{% endblock %}
 
-body{
-    background:#f5f7fa;
-}
-
-/* Navbar */
-nav{
-    background:#1e3c72;
-    padding:18px 50px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-nav h1{
-    color:white;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:20px;
-}
-
-/* Container */
-.container{
-    width:90%;
-    margin:auto;
-    padding:40px 0;
-}
-
-.header{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.header h2{
-    color:#1e3c72;
-    font-size:32px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:25px;
-}
-
-.card{
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-.card img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-    background:#f0f0f0;
-}
-
-.card-content{
-    padding:20px;
-}
-
-.card h3{
-    margin-bottom:10px;
-    color:#222;
-}
-
-.price{
-    color:#28a745;
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:12px;
-}
-
-.btn{
-    display:inline-block;
-    padding:8px 16px;
-    background:#1e3c72;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    margin-right:8px;
-}
-
-.btn:hover{
-    background:#2a5298;
-}
-
-.btn-danger{
-    background:#dc3545;
-}
-
-.btn-danger:hover{
-    background:#c82333;
-}
-
-.empty{
-    text-align:center;
-    padding:50px;
-    color:#666;
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1>CampusMart</h1>
-    <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="header">
-        <h2>My Wishlist</h2>
-    </div>
-
-    {% if wishlist_items %}
-    <div class="grid">
-        {% for item in wishlist_items %}
-        <div class="card">
-            <div class="card-content">
-                <h3>{{ item.product.name }}</h3>
-                <p class="price">₹{{ "%.2f"|format(item.product.price) }}</p>
-                <p>{{ item.product.description or "No description" }}</p>
-                <a href="/product/{{ item.product.id }}" class="btn">View Details</a>
-                <a href="#" class="btn btn-danger">Remove</a>
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div style="margin-bottom: 24px; display:flex; flex-wrap:wrap; justify-content:space-between; gap: 16px; align-items:center;">
+            <div>
+                <div class="section-title" style="margin-bottom: 8px;">Wishlist</div>
+                <p class="section-subtitle">See the products you've saved for later.</p>
             </div>
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="empty">
-        <h3>Your wishlist is empty</h3>
-        <p>Browse products and add items you like to your wishlist.</p>
-        <a href="/products" class="btn">Browse Products</a>
-    </div>
-    {% endif %}
-</div>
 
-</body>
-</html>
+        {% if wishlist_items %}
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            {% for item in wishlist_items %}
+            <div class="card">
+                <div class="card-image">
+                    {% if item.product.image %}
+                    <img src="{{ item.product.image }}" alt="{{ item.product.name }}">
+                    {% else %}
+                    <div style="display:grid; place-items:center; height:100%; color:#6b7280;"><i class="fas fa-heart" style="font-size: 42px;"></i></div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ item.product.name }}</h3>
+                    <p class="card-text">{{ item.product.description[:110] ~ ('...' if item.product.description|length > 110 else '') }}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+                        <span class="price">₹{{ '%.2f' | format(item.product.price) }}</span>
+                        <span class="badge">{{ item.product.category or 'General' }}</span>
+                    </div>
+                    <div style="display:flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="{{ url_for('product.product_details', id=item.product.id) }}" class="btn btn-outline" style="flex:1;">View</a>
+                        <a href="#" class="btn btn-secondary" style="flex:1;">Remove</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>Your wishlist is empty</h3>
+            <p>Browse products and add the ones you love to your wishlist.</p>
+            <a href="{{ url_for('product.products') }}" class="btn">Browse Products</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

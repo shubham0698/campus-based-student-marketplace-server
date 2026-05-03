@@ -1,378 +1,49 @@
-<!-- products.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Products - CampusMart</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+{% block title %}Products - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body{
-    background:#f8f9fa;
-    color:#333;
-}
-
-/* Navbar */
-nav{
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
-    padding:15px 50px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-nav h1{
-    color:white;
-    font-size:24px;
-    font-weight:700;
-}
-
-nav .nav-links{
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    padding:8px 16px;
-    border-radius:20px;
-    transition:0.3s;
-    font-weight:500;
-}
-
-nav a:hover{
-    background:rgba(255,255,255,0.2);
-    transform:translateY(-1px);
-}
-
-/* Search Bar */
-.search-container{
-    background:white;
-    padding:20px 50px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
-}
-
-.search-box{
-    max-width:600px;
-    margin:0 auto;
-    position:relative;
-}
-
-.search-box input{
-    width:100%;
-    padding:12px 45px 12px 20px;
-    border:2px solid #e9ecef;
-    border-radius:25px;
-    font-size:16px;
-    outline:none;
-    transition:0.3s;
-}
-
-.search-box input:focus{
-    border-color:#1e3c72;
-    box-shadow:0 0 0 3px rgba(30,60,114,0.1);
-}
-
-.search-box i{
-    position:absolute;
-    right:15px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#6c757d;
-}
-
-/* Header */
-.header{
-    text-align:center;
-    padding:50px 20px;
-    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-    color:white;
-}
-
-.header h2{
-    font-size:42px;
-    margin-bottom:10px;
-    font-weight:700;
-}
-
-.header p{
-    font-size:18px;
-    opacity:0.9;
-}
-
-/* Filters */
-.filters{
-    background:white;
-    padding:20px 50px;
-    border-bottom:1px solid #e9ecef;
-}
-
-.filter-options{
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.filter-btn{
-    padding:8px 16px;
-    border:2px solid #e9ecef;
-    background:white;
-    border-radius:20px;
-    cursor:pointer;
-    transition:0.3s;
-    font-weight:500;
-}
-
-.filter-btn.active,
-.filter-btn:hover{
-    background:#1e3c72;
-    color:white;
-    border-color:#1e3c72;
-}
-
-/* Products */
-.container{
-    max-width:1200px;
-    margin:0 auto;
-    padding:40px 20px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:30px;
-}
-
-.card{
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-    transition:0.3s;
-    position:relative;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.15);
-}
-
-.card img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    transition:0.3s;
-}
-
-.card:hover img{
-    transform:scale(1.05);
-}
-
-.card-content{
-    padding:20px;
-}
-
-.card h3{
-    margin-bottom:8px;
-    color:#2d3748;
-    font-size:18px;
-    font-weight:600;
-}
-
-.card .category{
-    color:#718096;
-    font-size:14px;
-    margin-bottom:10px;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-}
-
-.card .description{
-    color:#4a5568;
-    font-size:14px;
-    margin-bottom:15px;
-    line-height:1.4;
-}
-
-.price{
-    color:#38a169;
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:15px;
-}
-
-.btn{
-    display:inline-block;
-    padding:10px 20px;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
-    color:white;
-    text-decoration:none;
-    border-radius:25px;
-    font-size:14px;
-    font-weight:600;
-    transition:0.3s;
-    text-align:center;
-    width:100%;
-}
-
-.btn:hover{
-    background:linear-gradient(135deg,#2a5298,#1e3c72);
-    transform:translateY(-2px);
-}
-
-/* Empty State */
-.empty{
-    text-align:center;
-    padding:80px 20px;
-    color:#718096;
-}
-
-.empty i{
-    font-size:64px;
-    margin-bottom:20px;
-    opacity:0.5;
-}
-
-.empty h3{
-    font-size:24px;
-    margin-bottom:10px;
-}
-
-/* Footer */
-footer{
-    text-align:center;
-    padding:30px;
-    background:#2d3748;
-    color:white;
-    margin-top:50px;
-}
-
-footer p{
-    opacity:0.8;
-}
-
-/* Responsive */
-@media (max-width:768px){
-    nav{
-        padding:15px 20px;
-        flex-direction:column;
-        gap:15px;
-    }
-
-    .nav-links{
-        width:100%;
-        justify-content:center;
-    }
-
-    .search-container{
-        padding:20px;
-    }
-
-    .header{
-        padding:30px 20px;
-    }
-
-    .header h2{
-        font-size:32px;
-    }
-
-    .filters{
-        padding:20px;
-    }
-
-    .filter-options{
-        gap:10px;
-    }
-
-    .container{
-        padding:20px 10px;
-    }
-
-    .grid{
-        grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-        gap:20px;
-    }
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1><i class="fas fa-university"></i> CampusMart</h1>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/products">Products</a>
-        <a href="/login">Login</a>
-    </div>
-</nav>
-
-<div class="search-container">
-    <div class="search-box">
-        <input type="text" placeholder="Search products...">
-        <i class="fas fa-search"></i>
-    </div>
-</div>
-
-<section class="header">
-    <h2>Discover Amazing Products</h2>
-    <p>Find books, gadgets, and more from your campus community</p>
-</section>
-
-<div class="filters">
-    <div class="filter-options">
-        <button class="filter-btn active">All</button>
-        <button class="filter-btn">Books</button>
-        <button class="filter-btn">Electronics</button>
-        <button class="filter-btn">Notes</button>
-        <button class="filter-btn">Bicycle</button>
-        <button class="filter-btn">Furniture</button>
-    </div>
-</div>
-
-<div class="container">
-    <div class="grid">
-        {% for product in products %}
-        <div class="card">
-            <img src="{{ product.image or 'https://via.placeholder.com/300x200?text=No+Image' }}" alt="{{ product.name }}">
-            <div class="card-content">
-                <h3>{{ product.name }}</h3>
-                <div class="category">{{ product.category or "General" }}</div>
-                <p class="description">{{ product.description or "No description available" }}</p>
-                <div class="price">₹{{ "%.2f"|format(product.price) }}</div>
-                <a href="/product/{{ product.id }}" class="btn">View Details</a>
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-title">Explore Products</div>
+                <p class="section-subtitle">Browse the campus marketplace for books, electronics, furniture and more.</p>
             </div>
+            {% if session.get('user_id') %}
+            <a href="{{ url_for('product.add_product') }}" class="btn btn-primary">List an Item</a>
+            {% endif %}
         </div>
-        {% endfor %}
+
+        {% if products %}
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            {% for product in products %}
+            <div class="card">
+                <div class="card-image">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    {% else %}
+                    <div style="display:grid; place-items:center; height:100%; color:#6b7280;"><i class="fas fa-box-open" style="font-size: 40px;"></i></div>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ product.name }}</h3>
+                    <div class="card-meta" style="gap: 10px; margin-bottom: 12px;">
+                        <span class="badge">{{ product.category or 'General' }}</span>
+                        <span class="price">₹{{ '%.2f' | format(product.price) }}</span>
+                    </div>
+                    <p class="card-text">{{ product.description or 'No description available.' }}</p>
+                    <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn" style="margin-top: 16px;">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No products found</h3>
+            <p>Try searching again, or check back later for new campus listings.</p>
+        </div>
+        {% endif %}
     </div>
-
-    {% if not products %}
-    <div class="empty">
-        <i class="fas fa-box-open"></i>
-        <h3>No products found</h3>
-        <p>Check back later for new listings from your campus community.</p>
-    </div>
-    {% endif %}
-</div>
-
-<footer>
-    <p>&copy; 2026 CampusMart. Connecting students, empowering commerce.</p>
-</footer>
-
-</body>
-</html>
+</section>
+{% endblock %}

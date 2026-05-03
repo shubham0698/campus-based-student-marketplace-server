@@ -1,57 +1,52 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <h2>{{ category }} Products</h2>
-            <p class="text-muted">Found {{ result_count }} product(s) in this category</p>
-        </div>
-    </div>
+{% block title %}{{ category }} Products - CampusMart{% endblock %}
 
-    {% if products %}
-        <div class="row">
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-title">{{ category }}</div>
+                <p class="section-subtitle">Found {{ result_count }} product(s) in this category.</p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="{{ url_for('product.categories') }}" class="btn btn-outline">All Categories</a>
+                <a href="{{ url_for('product.products') }}" class="btn btn-secondary">All Products</a>
+            </div>
+        </div>
+
+        {% if products %}
+        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
             {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
+            <div class="card">
+                <div class="card-image">
                     {% if product.image %}
-                    <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
                     {% else %}
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span class="text-muted">No Image</span>
-                    </div>
+                    <div style="display:grid; place-items:center; height:100%; color:var(--text-light);"><i class="fas fa-box-open" style="font-size: 40px;"></i></div>
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
-                        <p class="card-text">
-                            <strong>₹{{ "%.2f"|format(product.price) }}</strong>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                Seller: <span class="badge badge-secondary">{{ product.owner.name }}</span>
-                            </small>
-                        </p>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ product.name }}</h3>
+                    <div class="card-meta">
+                        <span class="badge">{{ product.category or 'General' }}</span>
+                        <span class="price" style="font-size: 18px;">₹{{ "%.2f"|format(product.price) }}</span>
                     </div>
-                    <div class="card-footer bg-white">
-                        <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn btn-primary btn-sm w-100">View Details</a>
-                    </div>
+                    <p class="card-text">{{ product.description[:100] }}{{ '...' if product.description|length > 100 else '' }}</p>
+                    <p class="text-muted" style="margin-bottom: 12px;"><i class="fas fa-user" style="margin-right: 4px;"></i> {{ product.owner.name }}</p>
+                    <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn" style="margin-top: auto;">View Details</a>
                 </div>
             </div>
             {% endfor %}
         </div>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">No products in this category!</h4>
-            <p>No products are available in the {{ category }} category. <a href="{{ url_for('product.categories') }}">Browse other categories</a>.</p>
+        {% else %}
+        <div class="empty-state">
+            <h3>No products in this category</h3>
+            <p>No products are available in {{ category }} right now.</p>
+            <a href="{{ url_for('product.categories') }}" class="btn">Browse Categories</a>
         </div>
-    {% endif %}
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <a href="{{ url_for('product.categories') }}" class="btn btn-secondary">Back to Categories</a>
-            <a href="{{ url_for('product.products') }}" class="btn btn-info">All Products</a>
-        </div>
+        {% endif %}
     </div>
-</div>
+</section>
 {% endblock %}

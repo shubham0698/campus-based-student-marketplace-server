@@ -1,6 +1,7 @@
 # database.py
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 db = SQLAlchemy()
 
@@ -12,6 +13,39 @@ def init_db(app):
 
     with app.app_context():
         db.create_all()
+        _ensure_sqlite_columns()
+
+
+def _ensure_sqlite_columns():
+    """Ensure SQLite tables have required columns after model updates."""
+    if db.engine.url.drivername != "sqlite":
+        return
+
+    required_columns = {
+        "products": {
+            "view_count": "INTEGER DEFAULT 0"
+        },
+        "users": {
+            "location_name": "VARCHAR(200) DEFAULT 'Campus'",
+            "latitude": "FLOAT DEFAULT 0.0",
+            "longitude": "FLOAT DEFAULT 0.0"
+        }
+    }
+
+    with db.engine.connect() as connection:
+        for table_name, columns in required_columns.items():
+            result = connection.execute(
+                text(f"PRAGMA table_info('{table_name}')")
+            )
+            existing_columns = [row[1] for row in result.fetchall()]
+
+            for column_name, definition in columns.items():
+                if column_name not in existing_columns:
+                    connection.execute(
+                        text(
+                            f"ALTER TABLE {table_name} ADD COLUMN {column_name} {definition}"
+                        )
+                    )
 
 
 # ==================================================

@@ -1,427 +1,94 @@
-<!-- dashboard.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - CampusMart</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+{% block title %}Dashboard - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body{
-    background:#f8f9fa;
-    color:#333;
-}
-
-/* Navbar */
-nav{
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
-    padding:15px 50px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-nav h1{
-    color:white;
-    font-size:24px;
-    font-weight:700;
-}
-
-nav .nav-links{
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    padding:8px 16px;
-    border-radius:20px;
-    transition:0.3s;
-    font-weight:500;
-}
-
-nav a:hover{
-    background:rgba(255,255,255,0.2);
-    transform:translateY(-1px);
-}
-
-/* Header */
-.header{
-    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-    color:white;
-    padding:60px 50px;
-    text-align:center;
-}
-
-.header h2{
-    font-size:36px;
-    margin-bottom:10px;
-    font-weight:700;
-}
-
-.header p{
-    font-size:18px;
-    opacity:0.9;
-}
-
-/* Stats Cards */
-.stats{
-    padding:40px 50px;
-    background:white;
-    border-bottom:1px solid #e9ecef;
-}
-
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:30px;
-    max-width:1000px;
-    margin:0 auto;
-}
-
-.stat-card{
-    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-    color:white;
-    padding:25px;
-    border-radius:15px;
-    text-align:center;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.stat-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.2);
-}
-
-.stat-card .icon{
-    font-size:32px;
-    margin-bottom:15px;
-    opacity:0.8;
-}
-
-.stat-card h3{
-    font-size:28px;
-    margin-bottom:5px;
-    font-weight:700;
-}
-
-.stat-card p{
-    opacity:0.9;
-    font-size:14px;
-}
-
-/* Cards */
-.container{
-    max-width:1200px;
-    margin:0 auto;
-    padding:50px 20px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
-}
-
-.card{
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-    transition:0.3s;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-}
-
-.card::before{
-    content:'';
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:4px;
-    background:linear-gradient(90deg,#667eea,#764ba2);
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.15);
-}
-
-.card .icon{
-    font-size:48px;
-    color:#667eea;
-    margin-bottom:20px;
-}
-
-.card h3{
-    color:#2d3748;
-    margin-bottom:15px;
-    font-size:20px;
-    font-weight:600;
-}
-
-.card p{
-    color:#4a5568;
-    margin-bottom:25px;
-    line-height:1.5;
-}
-
-.btn{
-    display:inline-block;
-    padding:12px 25px;
-    background:linear-gradient(135deg,#1e3c72,#2a5298);
-    color:white;
-    text-decoration:none;
-    border-radius:25px;
-    font-weight:600;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:linear-gradient(135deg,#2a5298,#1e3c72);
-    transform:translateY(-2px);
-}
-
-/* Recent Products */
-.recent-products{
-    background:white;
-    margin:40px 0;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-}
-
-.recent-products h3{
-    color:#2d3748;
-    margin-bottom:20px;
-    font-size:24px;
-    text-align:center;
-}
-
-.product-list{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
-
-.product-item{
-    display:flex;
-    align-items:center;
-    padding:15px;
-    border:1px solid #e9ecef;
-    border-radius:10px;
-    transition:0.3s;
-}
-
-.product-item:hover{
-    border-color:#667eea;
-    background:#f8f9ff;
-}
-
-.product-item img{
-    width:60px;
-    height:60px;
-    border-radius:8px;
-    object-fit:cover;
-    margin-right:15px;
-}
-
-.product-item .info h4{
-    margin-bottom:5px;
-    color:#2d3748;
-    font-size:16px;
-}
-
-.product-item .info p{
-    color:#718096;
-    font-size:14px;
-}
-
-/* Footer */
-footer{
-    text-align:center;
-    background:#2d3748;
-    color:white;
-    padding:30px;
-    margin-top:50px;
-}
-
-footer p{
-    opacity:0.8;
-}
-
-/* Responsive */
-@media (max-width:768px){
-    nav{
-        padding:15px 20px;
-        flex-direction:column;
-        gap:15px;
-    }
-
-    .nav-links{
-        width:100%;
-        justify-content:center;
-    }
-
-    .header{
-        padding:40px 20px;
-    }
-
-    .header h2{
-        font-size:28px;
-    }
-
-    .stats{
-        padding:30px 20px;
-    }
-
-    .stats-grid{
-        grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-        gap:20px;
-    }
-
-    .container{
-        padding:30px 10px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-        gap:20px;
-    }
-
-    .product-list{
-        grid-template-columns:1fr;
-    }
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1><i class="fas fa-university"></i> CampusMart</h1>
-    <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
-    </div>
-</nav>
-
-<section class="header">
-    <h2>Welcome back, {{ session.user_name }}! 👋</h2>
-    <p>Manage your products, track sales, and connect with buyers</p>
-</section>
-
-<div class="stats">
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="icon"><i class="fas fa-box"></i></div>
-            <h3>{{ total_products }}</h3>
-            <p>Total Products</p>
-        </div>
-        <div class="stat-card">
-            <div class="icon"><i class="fas fa-check-circle"></i></div>
-            <h3>{{ available_products }}</h3>
-            <p>Available</p>
-        </div>
-        <div class="stat-card">
-            <div class="icon"><i class="fas fa-shopping-cart"></i></div>
-            <h3>{{ sold_products }}</h3>
-            <p>Sold</p>
-        </div>
-        <div class="stat-card">
-            <div class="icon"><i class="fas fa-heart"></i></div>
-            <h3>{{ wishlist_count }}</h3>
-            <p>Wishlist Items</p>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="grid">
-
-        <div class="card">
-            <div class="icon"><i class="fas fa-plus-circle"></i></div>
-            <h3>Add Product</h3>
-            <p>Sell books, gadgets, notes, cycles and more. Reach thousands of students on your campus.</p>
-            <a href="/add-product" class="btn">Add New Product</a>
+{% block content %}
+<section class="section" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="container">
+        <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+            <div>
+                <div class="section-title" style="margin-bottom: 8px;">Your Dashboard</div>
+                <p class="section-subtitle">Track your active listings, orders, wishlist and recent product activity in one place.</p>
+            </div>
+            <a href="{{ url_for('product.add_product') }}" class="btn">Add Product</a>
         </div>
 
-        <div class="card">
-            <div class="icon"><i class="fas fa-list"></i></div>
-            <h3>My Products</h3>
-            <p>View and manage all items you have listed for sale. Edit details or mark as sold.</p>
-            <a href="/my-products" class="btn">View Products</a>
-        </div>
-
-        <div class="card">
-            <div class="icon"><i class="fas fa-envelope"></i></div>
-            <h3>Messages</h3>
-            <p>Check buyer inquiries and respond to interested customers quickly.</p>
-            <a href="/messages" class="btn">View Messages</a>
-        </div>
-
-        <div class="card">
-            <div class="icon"><i class="fas fa-user"></i></div>
-            <h3>Profile</h3>
-            <p>Update your personal information and account settings.</p>
-            <a href="/profile" class="btn">Edit Profile</a>
-        </div>
-
-        <div class="card">
-            <div class="icon"><i class="fas fa-shopping-bag"></i></div>
-            <h3>Orders</h3>
-            <p>Track purchased items and view your buying history.</p>
-            <a href="/orders" class="btn">View Orders</a>
-        </div>
-
-        <div class="card">
-            <div class="icon"><i class="fas fa-heart"></i></div>
-            <h3>Wishlist</h3>
-            <p>Keep track of products you're interested in buying later.</p>
-            <a href="/wishlist" class="btn">View Wishlist</a>
-        </div>
-
-    </div>
-
-    {% if recent_products %}
-    <div class="recent-products">
-        <h3><i class="fas fa-clock"></i> Recent Products</h3>
-        <div class="product-list">
-            {% for product in recent_products %}
-            <div class="product-item">
-                <img src="{{ product.image or 'https://via.placeholder.com/60x60?text=No+Img' }}" alt="{{ product.name }}">
-                <div class="info">
-                    <h4>{{ product.name }}</h4>
-                    <p>₹{{ "%.2f"|format(product.price) }} • {{ product.status }}</p>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Total Listings</h3>
+                    <p class="price">{{ total_products }}</p>
+                    <p class="text-muted">Products you have listed on CampusMart.</p>
                 </div>
             </div>
-            {% endfor %}
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Available</h3>
+                    <p class="price">{{ available_products }}</p>
+                    <p class="text-muted">Items currently marked as available.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Sold</h3>
+                    <p class="price">{{ sold_products }}</p>
+                    <p class="text-muted">Products already sold.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Wishlist</h3>
+                    <p class="price">{{ wishlist_count }}</p>
+                    <p class="text-muted">Items saved for later.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Orders</h3>
+                    <p class="price">{{ orders_count }}</p>
+                    <p class="text-muted">Recent purchases in your account.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Messages</h3>
+                    <p class="price">{{ messages_count }}</p>
+                    <p class="text-muted">New conversations with buyers or sellers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="padding-top: 36px; padding-bottom: 0;">
+            <div class="section-title" style="font-size: 28px; margin-bottom: 16px;">Recent Listings</div>
+            {% if recent_products %}
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                {% for product in recent_products %}
+                <div class="card">
+                    <div class="card-image">
+                        {% if product.image %}
+                        <img src="{{ product.image }}" alt="{{ product.name }}">
+                        {% else %}
+                        <div style="display:grid; place-items:center; height:100%; color:#6b7280;"><i class="fas fa-box-open" style="font-size: 40px;"></i></div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">{{ product.description[:95] ~ ('...' if product.description|length > 95 else '') }}</p>
+                        <div style="display:flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <span class="badge">{{ product.category or 'General' }}</span>
+                            <span class="price">₹{{ '%.2f' | format(product.price) }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <h3>No recent products yet</h3>
+                <p>You don’t have any recent listings. Add a product to start selling on CampusMart.</p>
+            </div>
+            {% endif %}
         </div>
     </div>
-    {% endif %}
-</div>
-
-<footer>
-    <p>&copy; 2026 CampusMart. Connecting students, empowering commerce.</p>
-</footer>
-
-</body>
-</html>
+</section>
+{% endblock %}

@@ -1,159 +1,55 @@
-<!-- edit-product.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edit Product - CampusMart</title>
+{% block title %}Edit Product - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+{% block search_bar %}{% endblock %}
 
-body{
-    background:#f4f6f9;
-}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="form-card" style="max-width: 760px; margin: 0 auto;">
+            <div class="section-title" style="margin-bottom: 8px;">Edit Product</div>
+            <p class="section-subtitle" style="margin-bottom: 24px;">Update the listing details and image for your product.</p>
 
-/* Navbar */
-nav{
-    background:#1e3c72;
-    color:white;
-    padding:18px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+            <form action="{{ url_for('product.edit_product', id=product.id) }}" method="POST" class="form-row">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input id="name" type="text" name="name" value="{{ product.name }}" placeholder="Enter product name" required>
+                </div>
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:18px;
-}
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="{{ product.category }}" selected>{{ product.category }}</option>
+                        <option>Books</option>
+                        <option>Electronics</option>
+                        <option>Notes</option>
+                        <option>Bicycle</option>
+                        <option>Furniture</option>
+                        <option>Accessories</option>
+                        <option>Study Materials</option>
+                        <option>Other</option>
+                    </select>
+                </div>
 
-/* Container */
-.container{
-    max-width:700px;
-    margin:40px auto;
-    background:white;
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
+                <div class="form-group">
+                    <label for="price">Price (₹)</label>
+                    <input id="price" type="number" name="price" step="0.01" value="{{ product.price }}" placeholder="Enter price" required>
+                </div>
 
-.container h2{
-    color:#1e3c72;
-    margin-bottom:25px;
-    text-align:center;
-}
+                <div class="form-group">
+                    <label for="image_url">Image URL</label>
+                    <input id="image_url" type="url" name="image_url" value="{{ product.image or '' }}" placeholder="Paste a valid image URL to update">
+                </div>
 
-.input-box{
-    margin-bottom:18px;
-}
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Enter product details">{{ product.description }}</textarea>
+                </div>
 
-.input-box label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:bold;
-    color:#333;
-}
-
-.input-box input,
-.input-box textarea,
-.input-box select{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    outline:none;
-}
-
-.input-box textarea{
-    resize:vertical;
-    min-height:120px;
-}
-
-.input-box input:focus,
-.input-box textarea:focus,
-.input-box select:focus{
-    border-color:#1e3c72;
-}
-
-.btn{
-    width:100%;
-    padding:14px;
-    border:none;
-    background:#1e3c72;
-    color:white;
-    font-size:16px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#2a5298;
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1>CampusMart</h1>
-    <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
+                <button type="submit" class="btn" style="width: 100%;">Save Changes</button>
+            </form>
+        </div>
     </div>
-</nav>
-
-<div class="container">
-    <h2>Edit Product</h2>
-
-    <form action="/edit-product/{{ product.id }}" method="POST" enctype="multipart/form-data">
-
-        <div class="input-box">
-            <label>Product Name</label>
-            <input type="text" name="name" value="{{ product.name }}" placeholder="Enter product name" required>
-        </div>
-
-        <div class="input-box">
-            <label>Category</label>
-            <select name="category" required>
-                <option value="{{ product.category }}" selected>{{ product.category }}</option>
-                <option>Books</option>
-                <option>Electronics</option>
-                <option>Notes</option>
-                <option>Bicycle</option>
-                <option>Furniture</option>
-                <option>Others</option>
-            </select>
-        </div>
-
-        <div class="input-box">
-            <label>Price (₹)</label>
-            <input type="number" step="0.01" name="price" value="{{ product.price }}" placeholder="Enter price" required>
-        </div>
-
-        <div class="input-box">
-            <label>Description</label>
-            <textarea name="description" placeholder="Enter product details">{{ product.description }}</textarea>
-        </div>
-
-        <div class="input-box">
-            <label>Upload Image</label>
-            <input type="file" name="image">
-        </div>
-
-        <button type="submit" class="btn">Update Product</button>
-
-    </form>
-</div>
-
-</body>
-</html>
+</section>
+{% endblock %}

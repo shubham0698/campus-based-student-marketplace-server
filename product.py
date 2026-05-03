@@ -49,12 +49,15 @@ def add_product():
             flash("Invalid price format.")
             return redirect(url_for("product.add_product"))
 
+        image_url = request.form.get("image_url", "").strip() or None
+
         new_product = Product(
             user_id=session["user_id"],
             name=name,
             category=category,
             price=price,
-            description=description
+            description=description,
+            image=image_url
         )
 
         db.session.add(new_product)
@@ -118,10 +121,14 @@ def edit_product(id):
             flash("Invalid price format.")
             return redirect(url_for("product.edit_product", id=id))
 
+        image_url = request.form.get("image_url", "").strip()
+
         product_data.name = name
         product_data.category = category
         product_data.price = price
         product_data.description = description
+        if image_url:
+            product_data.image = image_url
 
         db.session.commit()
 

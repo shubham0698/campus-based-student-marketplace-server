@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Error</title>
-</head>
-<body>
-    <h1>500 - Internal Server Error</h1>
-    <p>Something went wrong on our end. Please try again later.</p>
-    <a href="/">Go Home</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Server Error{% endblock %}
+
+{% block search_bar %}{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 700px; text-align: center;">
+        <div class="card" style="padding: 60px 30px;">
+            <h1 class="section-title">500</h1>
+            <p class="section-subtitle">Something went wrong on our side. Please try again later.</p>
+            <a href="{{ url_for('home') }}" class="btn" style="margin-top: 24px;">Back to Home</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

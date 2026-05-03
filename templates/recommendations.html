@@ -1,80 +1,55 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <h2>⭐ Recommended For You</h2>
-            <p class="text-muted">
-                Personalized recommendations based on your interests, wishlists, and browsing history
-            </p>
-            <p class="text-info">Found {{ result_count }} recommendation(s) for you</p>
-        </div>
-    </div>
+{% block title %}Recommendations - CampusMart{% endblock %}
 
-    {% if products %}
-        <div class="row">
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="section-title"><i class="fas fa-star" style="color: var(--amber); margin-right: 8px;"></i>Recommended For You</div>
+                <p class="section-subtitle">Personalized picks based on your interests, wishlists, and browsing history &mdash; {{ result_count }} recommendation(s).</p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="{{ url_for('product.products') }}" class="btn btn-secondary">All Products</a>
+                <a href="{{ url_for('product.trending') }}" class="btn btn-outline">Trending</a>
+            </div>
+        </div>
+
+        {% if products %}
+        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
             {% for product in products %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header bg-info">
-                        <small class="text-white">Recommended</small>
-                    </div>
+            <div class="card">
+                <div class="card-image">
                     {% if product.image %}
-                    <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
                     {% else %}
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span class="text-muted">No Image</span>
-                    </div>
+                    <div style="display:grid; place-items:center; height:100%; color:var(--text-light);"><i class="fas fa-box-open" style="font-size: 40px;"></i></div>
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
-                        <p class="card-text">
-                            <strong>₹{{ "%.2f"|format(product.price) }}</strong>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                Category: <span class="badge badge-info">{{ product.category or 'General' }}</span>
-                            </small>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                👤 Seller: <span class="badge badge-secondary">{{ product.owner.name }}</span>
-                            </small>
-                        </p>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ product.name }}</h3>
+                    <div class="card-meta">
+                        <span class="badge">{{ product.category or 'General' }}</span>
+                        <span class="price" style="font-size: 18px;">₹{{ "%.2f"|format(product.price) }}</span>
                     </div>
-                    <div class="card-footer bg-white">
-                        <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn btn-primary btn-sm w-100">View Details</a>
-                    </div>
+                    <p class="card-text">{{ product.description[:100] }}{{ '...' if product.description|length > 100 else '' }}</p>
+                    <p class="text-muted" style="margin-bottom: 12px;"><i class="fas fa-user" style="margin-right: 4px;"></i> {{ product.owner.name }}</p>
+                    <a href="{{ url_for('product.product_details', id=product.id) }}" class="btn" style="margin-top: auto;">View Details</a>
                 </div>
             </div>
             {% endfor %}
         </div>
-    {% else %}
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">No recommendations yet!</h4>
-            <p>
-                We need to learn your preferences first!
-                Start by:
-            </p>
-            <ul>
-                <li>Adding products to your <a href="{{ url_for('dashboard.wishlist') }}">wishlist</a></li>
-                <li>Placing <a href="{{ url_for('dashboard.orders') }}">orders</a></li>
-                <li>Browsing <a href="{{ url_for('product.products') }}">products</a></li>
-            </ul>
-            <p class="mt-3">
-                In the meantime, check out <a href="{{ url_for('product.trending') }}">trending products</a>.
-            </p>
+        {% else %}
+        <div class="empty-state">
+            <h3>No recommendations yet</h3>
+            <p>We need to learn your preferences first! Try browsing products, adding to your wishlist, or placing orders.</p>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="{{ url_for('product.products') }}" class="btn">Browse Products</a>
+                <a href="{{ url_for('product.trending') }}" class="btn btn-outline">See Trending</a>
+            </div>
         </div>
-    {% endif %}
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <a href="{{ url_for('product.products') }}" class="btn btn-secondary">All Products</a>
-            <a href="{{ url_for('product.trending') }}" class="btn btn-warning">Trending</a>
-            <a href="{{ url_for('product.nearest_products') }}" class="btn btn-success">Nearest Products</a>
-        </div>
+        {% endif %}
     </div>
-</div>
+</section>
 {% endblock %}

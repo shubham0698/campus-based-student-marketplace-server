@@ -1,112 +1,29 @@
-<!-- profile.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profile - CampusMart</title>
+{% block title %}Profile - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+{% block search_bar %}{% endblock %}
 
-body{
-    background:#f4f6f9;
-}
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 640px;">
+        <div class="form-card">
+            <div class="section-title" style="margin-bottom: 8px;">My Profile</div>
+            <p class="section-subtitle" style="margin-bottom: 24px;">View and manage your account information.</p>
 
-/* Navbar */
-nav{
-    background:#1e3c72;
-    color:white;
-    padding:18px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+            <div class="form-row">
+                <div class="form-group"><label>Name</label><input type="text" value="{{ user.name }}" readonly></div>
+                <div class="form-group"><label>Email</label><input type="email" value="{{ user.email }}" readonly></div>
+                <div class="form-group"><label>Phone</label><input type="text" value="{{ user.phone or 'Not provided' }}" readonly></div>
+                <div class="form-group"><label>College</label><input type="text" value="{{ user.college or 'Not provided' }}" readonly></div>
+                <div class="form-group"><label>Department</label><input type="text" value="{{ user.department or 'Not provided' }}" readonly></div>
+                <div class="form-group" style="grid-column: 1 / -1;"><label>Member Since</label><input type="text" value="{{ user.created_at.strftime('%B %Y') }}" readonly></div>
+            </div>
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:18px;
-}
-
-/* Container */
-.container{
-    max-width:600px;
-    margin:40px auto;
-    background:white;
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
-
-.container h2{
-    color:#1e3c72;
-    margin-bottom:25px;
-    text-align:center;
-}
-
-.profile-info{
-    margin-bottom:20px;
-}
-
-.profile-info p{
-    margin-bottom:10px;
-    padding:10px;
-    background:#f8f9fa;
-    border-radius:8px;
-}
-
-.profile-info strong{
-    color:#1e3c72;
-}
-
-.btn{
-    display:inline-block;
-    padding:12px 25px;
-    background:#1e3c72;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    margin-top:20px;
-}
-
-.btn:hover{
-    background:#2a5298;
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1>CampusMart</h1>
-    <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
+            <div style="margin-top: 20px; text-align: right;">
+                <a href="{{ url_for('dashboard.dashboard_home') }}" class="btn btn-outline">Back to Dashboard</a>
+            </div>
+        </div>
     </div>
-</nav>
-
-<div class="container">
-    <h2>My Profile</h2>
-
-    <div class="profile-info">
-        <p><strong>Name:</strong> {{ user.name }}</p>
-        <p><strong>Email:</strong> {{ user.email }}</p>
-        <p><strong>Phone:</strong> {{ user.phone or "Not provided" }}</p>
-        <p><strong>College:</strong> {{ user.college or "Not provided" }}</p>
-        <p><strong>Department:</strong> {{ user.department or "Not provided" }}</p>
-        <p><strong>Member since:</strong> {{ user.created_at.strftime('%B %Y') }}</p>
-    </div>
-
-    <a href="/dashboard" class="btn">Back to Dashboard</a>
-</div>
-
-</body>
-</html>
+</section>
+{% endblock %}

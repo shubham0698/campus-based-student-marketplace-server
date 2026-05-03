@@ -1,148 +1,52 @@
-<!-- product-details.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ product.name }} - CampusMart</title>
+{% block title %}{{ product.name }} - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+{% block search_bar %}{% endblock %}
 
-body{
-    background:#f5f7fa;
-}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; align-items: start;">
+            <div class="card card-image" style="min-height: 420px;">
+                {% if product.image %}
+                <img src="{{ product.image }}" alt="{{ product.name }}">
+                {% else %}
+                <div style="display:grid; place-items:center; height:100%; color:#6b7280;">
+                    <i class="fas fa-image" style="font-size: 48px;"></i>
+                    <p style="margin-top: 12px;">No Image Available</p>
+                </div>
+                {% endif %}
+            </div>
 
-/* Navbar */
-nav{
-    background:#1e3c72;
-    padding:18px 50px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+            <div>
+                <div class="card-body">
+                    <h1 class="card-title">{{ product.name }}</h1>
+                    <div class="card-meta" style="margin-bottom: 20px; gap: 16px;">
+                        <span class="badge">{{ product.category or 'General' }}</span>
+                        <span class="badge" style="background: #d1fae5; color: #166534;">{{ product.status.title() }}</span>
+                    </div>
+                    <div class="price">₹{{ '%.2f' | format(product.price) }}</div>
+                    <p class="card-text" style="margin-bottom: 24px;">{{ product.description or 'No description provided for this product.' }}</p>
 
-nav h1{
-    color:white;
-}
+                    <div class="card-meta" style="display: grid; gap: 10px; margin-bottom: 28px;">
+                        <span class="text-muted"><strong>Seller:</strong> {{ product.owner.name }}</span>
+                        <span class="text-muted"><strong>Contact:</strong> {{ product.owner.email }}</span>
+                    </div>
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:20px;
-}
+                    {% if session.get('user_id') and session.get('user_id') != product.user_id %}
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                        <a href="#" class="btn">Add to Wishlist</a>
+                        <a href="mailto:{{ product.owner.email }}" class="btn btn-secondary">Contact Seller</a>
+                    </div>
+                    {% endif %}
 
-/* Container */
-.container{
-    max-width:800px;
-    margin:40px auto;
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-.product-image{
-    width:100%;
-    height:300px;
-    background:#f0f0f0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.product-details{
-    padding:30px;
-}
-
-.product-details h2{
-    color:#1e3c72;
-    margin-bottom:10px;
-}
-
-.price{
-    color:#28a745;
-    font-size:28px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-.description{
-    margin-bottom:20px;
-    line-height:1.6;
-}
-
-.info{
-    margin-bottom:20px;
-}
-
-.info p{
-    margin-bottom:5px;
-}
-
-.btn{
-    display:inline-block;
-    padding:12px 25px;
-    background:#1e3c72;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    margin-right:10px;
-}
-
-.btn:hover{
-    background:#2a5298;
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1>CampusMart</h1>
-    <div>
-        <a href="/">Home</a>
-        <a href="/products">Products</a>
-        {% if session.user_id %}
-        <a href="/dashboard">Dashboard</a>
-        <a href="/logout">Logout</a>
-        {% else %}
-        <a href="/login">Login</a>
-        {% endif %}
-    </div>
-</nav>
-
-<div class="container">
-    <div class="product-image">
-        {% if product.image %}
-        <img src="{{ product.image }}" alt="{{ product.name }}" style="max-width:100%; max-height:100%;">
-        {% else %}
-        <span>No Image</span>
-        {% endif %}
-    </div>
-    <div class="product-details">
-        <h2>{{ product.name }}</h2>
-        <div class="price">₹{{ "%.2f"|format(product.price) }}</div>
-        <div class="description">{{ product.description or "No description available." }}</div>
-        <div class="info">
-            <p><strong>Category:</strong> {{ product.category or "Not specified" }}</p>
-            <p><strong>Status:</strong> {{ product.status }}</p>
-            <p><strong>Posted by:</strong> {{ product.owner.name }}</p>
-            <p><strong>Contact:</strong> {{ product.owner.email }}</p>
+                    <div style="margin-top: 24px;">
+                        <a href="{{ url_for('product.products') }}" class="btn btn-outline">Back to Products</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% if session.user_id and session.user_id != product.user_id %}
-        <a href="#" class="btn">Add to Wishlist</a>
-        <a href="#" class="btn">Contact Seller</a>
-        {% endif %}
-        <a href="/products" class="btn">Back to Products</a>
     </div>
-</div>
-
-</body>
-</html>
+</section>
+{% endblock %}

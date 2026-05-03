@@ -1,0 +1,7 @@
+flask
+  => home.html
+login.html
+register.html
+products.html
+add_product.html
+dashboard.html

@@ -89,6 +89,7 @@
         </div>
     </nav>
 
+    {% block search_bar %}
     <!-- Search Bar -->
     <div class="search-bar-section">
         <div class="container">
@@ -115,6 +116,7 @@
             </form>
         </div>
     </div>
+    {% endblock %}
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}

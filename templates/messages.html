@@ -1,161 +1,43 @@
-<!-- messages.html -->
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Messages - CampusMart</title>
+{% block title %}Messages - CampusMart{% endblock %}
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
+{% block search_bar %}{% endblock %}
 
-body{
-    background:#f5f7fa;
-}
-
-/* Navbar */
-nav{
-    background:#1e3c72;
-    padding:18px 50px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-nav h1{
-    color:white;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-left:20px;
-}
-
-/* Container */
-.container{
-    width:90%;
-    margin:auto;
-    padding:40px 0;
-}
-
-.header{
-    text-align:center;
-    margin-bottom:30px;
-}
-
-.header h2{
-    color:#1e3c72;
-    font-size:32px;
-}
-
-.message-list{
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-.message-item{
-    padding:20px;
-    border-bottom:1px solid #eee;
-}
-
-.message-item:last-child{
-    border-bottom:none;
-}
-
-.message-header{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-}
-
-.sender{
-    font-weight:bold;
-    color:#1e3c72;
-}
-
-.timestamp{
-    color:#666;
-    font-size:14px;
-}
-
-.message-content{
-    color:#333;
-    line-height:1.5;
-}
-
-.btn{
-    padding:8px 16px;
-    background:#1e3c72;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    margin-top:10px;
-    display:inline-block;
-}
-
-.btn:hover{
-    background:#2a5298;
-}
-
-.empty{
-    text-align:center;
-    padding:50px;
-    color:#666;
-    background:white;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-</style>
-
-</head>
-<body>
-
-<nav>
-    <h1>CampusMart</h1>
-    <div>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/products">Products</a>
-        <a href="/logout">Logout</a>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="header">
-        <h2>My Messages</h2>
-    </div>
-
-    {% if inbox %}
-    <div class="message-list">
-        {% for message in inbox %}
-        <div class="message-item">
-            <div class="message-header">
-                <span class="sender">From: {{ message.sender.name }}</span>
-                <span class="timestamp">{{ message.created_at.strftime('%d %b %Y %H:%M') }}</span>
+{% block content %}
+<section class="section">
+    <div class="container" style="max-width: 980px;">
+        <div style="margin-bottom: 26px; display:flex; flex-wrap:wrap; justify-content:space-between; gap: 16px; align-items:center;">
+            <div>
+                <div class="section-title" style="margin-bottom: 8px;">Messages</div>
+                <p class="section-subtitle">View recent conversations and reply directly to sellers or buyers.</p>
             </div>
-            <div class="message-content">
-                {{ message.message }}
-            </div>
-            <a href="mailto:{{ message.sender.email }}" class="btn">Reply</a>
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="empty">
-        <h3>No messages yet</h3>
-        <p>You don't have any messages from buyers or sellers.</p>
-        <a href="/products" class="btn">Browse Products</a>
-    </div>
-    {% endif %}
-</div>
 
-</body>
-</html>
+        {% if inbox %}
+        <div class="grid" style="grid-template-columns: 1fr; gap: 18px;">
+            {% for message in inbox %}
+            <div class="card">
+                <div class="card-body">
+                    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap: 12px; margin-bottom: 14px;">
+                        <div>
+                            <h3 class="card-title" style="font-size: 20px; margin-bottom: 6px;">From: {{ message.sender.name }}</h3>
+                            <p class="text-muted">{{ message.created_at.strftime('%d %b %Y %H:%M') }}</p>
+                        </div>
+                        <a href="mailto:{{ message.sender.email }}" class="btn btn-secondary">Reply</a>
+                    </div>
+                    <p class="card-text">{{ message.message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No messages yet</h3>
+            <p>Once someone contacts you about a product, messages will appear here.</p>
+            <a href="{{ url_for('product.products') }}" class="btn">Browse Products</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
